@@ -1,0 +1,110 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "JetBrains Mono", Courier, monospace;
+}
+:root{
+    --width:250px;
+    --height:400px;
+    --quantity:10;
+}
+body {
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(
+    to left top,
+    rgba(100, 100, 00, 0.2),
+    rgba(46, 107, 95, 0.828)
+  );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100dvh;
+  min-width: 100vw;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+h3 {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: -2px;
+  font-size: clamp(1rem, 5vw, 4rem);
+  font-weight: 700;
+  font-style: oblique;
+  color: rgba(85, 14, 99, 0.736);
+}
+
+.carousel__container {
+
+  border: 2px solid red;
+  position: relative; 
+  width: 75dvw;
+  /* min-width: calc(var(--width) * var(--quantity)); */
+  height: var(--height);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transform: perspective(2500px);
+  display: flex;
+  justify-content: center;
+  gap:0.1rem;
+
+  & .item {
+      /* min-height: min(50%, 200px);
+      min-width: min(60%, 150px); */
+      height: var(--height);
+      width: var(--width);
+    position: absolute;
+    filter: brightness(0);
+    transition: all 0.5s linear;
+    left: 100%;
+    animation: run 10s linear infinite;
+    animation-delay: calc((10s / var(--quantity)) * (var(--position) - 1));
+    &:hover {
+      filter: brightness(1);
+      transform: translateZ(200px);
+    }
+    & img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  & .item:hover + * {
+    filter: brightness(0.5);
+    transform: translateZ(150px) rotateY(40deg);
+  }
+  & .item:hover + * + * {
+    filter: brightness(0.3);
+    transform: translateZ(70px) rotateY(20deg);
+  }
+  & .item:hover + * + * + * {
+    filter: brightness(0.1);
+    transform: translateZ(60px) rotateY(10deg);
+  }
+  & .item:has(+ *:hover) {
+    filter: brightness(0.5);
+    transform: translateZ(150px) rotateY(-40deg);
+  }
+  & .item:has(+ * + *:hover) {
+    filter: brightness(0.3);
+    transform: translateZ(70px) rotateY(-20deg);
+  }
+  & .item:has(+ * + * + *:hover) {
+    filter: brightness(0.2);
+    transform: translateZ(60px) rotateY(10deg);
+  }
+}
+@keyframes run{
+    from{
+        left:100%;
+    }
+    to{
+        left:calc(var(--width) * -1);
+    }
+     /* 100%{
+        left:calc( var(--width) * -1)
+     } */
+}
